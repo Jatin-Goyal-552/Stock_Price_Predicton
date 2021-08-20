@@ -1,75 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div class="dropdown-menu">
-        
-        <form class="px-4 py-3" method="POST" action=" ">
-            {% csrf_token %}
-            <select name="company1" style="font-size: 17px;width:226px;">
-                <option  selected disabled="true">--SELECT COMPANY--</option>
-                <option value="0">Bitcoin</option>
-                <option value="1">Apple</option>
-                <option value="2">Google</option>
-                <!-- <option value="3">1920.0 x 1080.0</option> -->
-            </select>
-          <button type="submit" class="btn btn-primary">Select</button>
-        </form>
-        <div class="dropdown-divider"></div>
-        <!-- <a class="dropdown-item" href="#">New around here? Sign up</a>
-        <a class="dropdown-item" href="#">Forgot password?</a> -->
-      </div>
-    <div id="container" style="width: 100%;">
-        <canvas id="pie-chart"></canvas>
-      </div>
-      <div id="container" style="width: 100%;">
-        <canvas id="pie-chart2"></canvas>
-      </div>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-      <script>
-    const labels = {{ x|safe }};
-const data = {
-  labels: labels,
-  datasets: [{
-    label: 'Bitcoin Price',
-    data: {{ y|safe }},
-    fill: false,
-    borderColor: 'rgb(75, 192, 192)',
-    tension: 0.1
-  }]
-};
-    const config = {
-  type: 'line',
-  data: data,
-};
-       
-        const labels2 = {{ predicted_x|safe }};
-const data2 = {
-  labels: labels2,
-  datasets: [{
-    label: 'Bitcoin Price',
-    data: {{ predicted_y|safe }},
-    fill: false,
-    borderColor: 'rgb(75, 192, 192)',
-    tension: 0.1
-  }]
-};
-    const config2 = {
-  type: 'line',
-  data: data2,
-};
 
-        window.onload = function() {
-            var ctx = document.getElementById('pie-chart').getContext('2d');
-          window.myPie = new Chart(ctx, config);
-          var ctx2 = document.getElementById('pie-chart2').getContext('2d');
-          window.myPie = new Chart(ctx2, config2);
-        };
-      </script>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="dropdown-menu">
+
+    <form class="px-4 py-3" method="POST" action=" ">
+      {% csrf_token %}
+      <select name="company1" style="font-size: 17px;width:226px;">
+        <option selected disabled="true">--SELECT COMPANY--</option>
+        <option value="0">Bitcoin</option>
+        <option value="1">Apple</option>
+        <option value="2">Google</option>
+        <!-- <option value="3">1920.0 x 1080.0</option> -->
+      </select>
+      <label for="birthday">Start Date:</label>
+      <input type="date" id="start_date" name="start_date">
+      <label for="birthday">Close Date:</label>
+      <input type="date" id="close_date" name="close_date">
+      <button type="submit" class="btn btn-primary">Select</button>
+    </form>
+    <div class="dropdown-divider"></div>
+    <!-- <a class="dropdown-item" href="#">New around here? Sign up</a>
+        <a class="dropdown-item" href="#">Forgot password?</a> -->
+  </div>
+  <div id="container" style="width: 100%;">
+    <canvas id="pie-chart-high"></canvas>
+  </div>
+  <div id="container" style="width: 100%;">
+    <canvas id="pie-chart-low"></canvas>
+  </div>
+  <div id="container" style="width: 100%;">
+    <canvas id="pie-chart-open"></canvas>
+  </div>
+  <div id="container" style="width: 100%;">
+    <canvas id="pie-chart-close"></canvas>
+  </div>
+  <div id="container" style="width: 100%;">
+    <canvas id="pie-chart2"></canvas>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+    const labels = {{ x| safe }};
+    const data_high = {
+      labels: labels,
+      datasets: [{
+        label: "{{ company }}" + " - High",
+        data: {{ y_high| safe }},
+    fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+    }]
+  };
+    const config_high = {
+      type: 'line',
+      data: data_high,
+    };
+    const data_low = {
+      labels: labels,
+      datasets: [{
+        label: "{{ company }}" + " - Low",
+        data: {{ y_low| safe }},
+    fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+    }]
+  };
+    const config_low = {
+      type: 'line',
+      data: data_low,
+    };
+    const data_open = {
+      labels: labels,
+      datasets: [{
+        label: "{{ company }}" + " - Open",
+        data: {{ y_open| safe }},
+    fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+    }]
+  };
+    const config_open = {
+      type: 'line',
+      data: data_open,
+    };
+    const data_close = {
+      labels: labels,
+      datasets: [{
+        label: "{{ company }}" + "- Close",
+        data: {{ y_close| safe }},
+    fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+    }]
+  };
+    const config_close = {
+      type: 'line',
+      data: data_close,
+    };
+    const labels2 = {{ predicted_x| safe }};
+    const data2 = {
+      labels: labels2,
+      datasets: [{
+        label: "{{ company }}",
+        data: {{ predicted_y| safe }},
+    fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+    }]
+  };
+    const config2 = {
+      type: 'line',
+      data: data2,
+    };
+
+    window.onload = function () {
+      var ctx_high = document.getElementById('pie-chart-high').getContext('2d');
+      window.myPie = new Chart(ctx_high, config_high);
+      var ctx_low = document.getElementById('pie-chart-low').getContext('2d');
+      window.myPie = new Chart(ctx_low, config_low);
+      var ctx_open = document.getElementById('pie-chart-open').getContext('2d');
+      window.myPie = new Chart(ctx_open, config_open);
+      var ctx_close = document.getElementById('pie-chart-close').getContext('2d');
+      window.myPie = new Chart(ctx_close, config_close);
+
+      var ctx2 = document.getElementById('pie-chart2').getContext('2d');
+      window.myPie = new Chart(ctx2, config2);
+    };
+  </script>
 </body>
+
 </html>

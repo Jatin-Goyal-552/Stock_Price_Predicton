@@ -15,9 +15,11 @@ import csv
 
 
 df=None
+df1=None
+df2=None
 def home(request):
     global df
-    stocks="BTC-INR"
+    stocks="AAPL"
     start_date='2021-06-19'
     close_date='2022-08-13'
     if request.method == 'POST':
@@ -38,6 +40,8 @@ def home(request):
     bitcoin = yf.Ticker(stocks)
     df=bitcoin.history(start=str(start_date), end=str(close_date), actions=False)
     print(df)
+    print("***********************")
+    print(bitcoin.institutional_holders)
     df['Date']=df.index.strftime('%d-%m-%y')
     # try:
     x=list(map(str,df.index.strftime('%d-%m-%y')))
@@ -107,7 +111,12 @@ def home(request):
         'company':stocks,
         'df':df,
         'predicted_x':[1,2,3,4,5],
-        'predicted_y':[5,4,3,2,1]
+        'predicted_y':[5,4,3,2,1],
+        'max_price':round(max(y_high),2),
+        'min_price':round(min(y_low),2),
+        'last_day_price':round(y_close[-1],2),
+        'change_in_price':round(y_high[-1]-y_high[0],2),
+        'change_in_precentage':round(((y_high[-1]-y_high[0])/y_high[0])*100,2),
     }
     
     return render(request,'home2.html',context)
@@ -136,8 +145,10 @@ def compare(request):
             stocks2='AAPL'
         elif company2=="2":
             stocks2="GOOG"  
+    global df1,df2
     data1 = yf.Ticker(stocks1)
     df1=data1.history(start=str(start_date), end=str(close_date), actions=False)
+    df1['Date']=df1.index.strftime('%d-%m-%y')
     print(df1)
     # try:
     x_stock1=list(map(str,df1.index.strftime('%d-%m-%y')))
@@ -150,6 +161,7 @@ def compare(request):
     y_volume_stock1=list(df1['Volume'])
     data2 = yf.Ticker(stocks2)
     df2=data2.history(start=str(start_date), end=str(close_date), actions=False)
+    df2['Date']=df2.index.strftime('%d-%m-%y')
     print(df2)
     # try:
     x_stock2=list(map(str,df2.index.strftime('%d-%m-%y')))
@@ -173,7 +185,7 @@ def compare(request):
         y_open_stock1=y_open_stock1[-len(x_stock1):]
         y_low_stock1=y_low_stock1[-len(x_stock1):]
         y_close_stock1=y_close_stock1[-len(x_stock1):]
-        y_volume_stock1=y_volume_stock14[-len(x_stock1):]
+        y_volume_stock1=y_volume_stock1[-len(x_stock1):]
         x_final=x_stock1[:]
     context={
         'x':x_final,
@@ -189,12 +201,24 @@ def compare(request):
         'y_volume_stock2':y_volume_stock2,
         'company1':stocks1,
         'company2':stocks2,
+        'df1':df1,
+        'df2':df2,
+        'max_price_stock1':round(max(y_high_stock1),2),
+        'min_price_stock1':round(min(y_low_stock1),2),
+        'last_day_price_stock1':round(y_close_stock1[-1],2),
+        'change_in_price_stock1':round(y_high_stock1[-1]-y_high_stock1[0],2),
+        'change_in_precentage_stock1':round(((y_high_stock1[-1]-y_high_stock1[0])/y_high_stock1[0])*100,2),
+        'max_price_stock2':round(max(y_high_stock2),2),
+        'min_price_stock2':round(min(y_low_stock2),2),
+        'last_day_price_stock2':round(y_close_stock2[-1],2),
+        'change_in_price_stock2':round(y_high_stock2[-1]-y_high_stock2[0],2),
+        'change_in_precentage_stock2':round(((y_high_stock2[-1]-y_high_stock2[0])/y_high_stock2[0])*100,2),
     }
     return render(request,'compare2.html',context)
 
 
-def download(request):
-    global df
+def download(request,id):
+    global df,df1,df2
     print(df)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="data.csv"' # your filename
@@ -206,9 +230,15 @@ def download(request):
 
     # for user in users:
     #     writer.writerow(user)
-
     writer = csv.writer(response)
     writer.writerow(['Date', 'Open', 'High', 'Low', 'Close', 'Volume'])
-    for ind in df.index:
-        writer.writerow([ind,df['Open'][ind],df['High'][ind],df['Low'][ind],df['Close'][ind],df['Volume'][ind]])
+    if id=='0':
+        for ind in df.index:
+            writer.writerow([ind,df['Open'][ind],df['High'][ind],df['Low'][ind],df['Close'][ind],df['Volume'][ind]])
+    elif id=='1':
+        for ind in df1.index:
+            writer.writerow([ind,df1['Open'][ind],df1['High'][ind],df1['Low'][ind],df1['Close'][ind],df1['Volume'][ind]])
+    elif id=='2':
+        for ind in df2.index:
+            writer.writerow([ind,df2['Open'][ind],df2['High'][ind],df2['Low'][ind],df2['Close'][ind],df2['Volume'][ind]])
     return response

@@ -448,6 +448,7 @@ John Abraham</h5>
                     <input type="date" id="close_date" name="close_date">
                     <button type="submit" class="btn btn-primary">Select</button>
                   </form>
+                  <button > <a href="{% url 'compare' %}">Compare</a> </button>
                 <!-- ============================================================== -->
                 <!-- pageheader -->
                 <!-- ============================================================== -->
@@ -467,6 +468,68 @@ John Abraham</h5>
                         </div>
                     </div>
                 </div> -->
+
+                <!-- <p>{{info}}</p> -->
+                <div class="ecommerce-widget">
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">Last Day Price</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{ last_day_price }}</h1>
+                                    </div>
+                                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
+                                    </div> -->
+                                </div>
+                                <div id="sparkline-revenue"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">Highest Price in Given Period</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{ max_price}}</h1>
+                                    </div>
+                                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
+                                    </div> -->
+                                </div>
+                                <div id="sparkline-revenue2"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">Lowest Price in Given Period</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{ min_price}}</h1>
+                                    </div>
+                                    <!-- <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                        <span>N/A</span>
+                                    </div> -->
+                                </div>
+                                <div id="sparkline-revenue3"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">Change In Price In Given Period</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{change_in_price}}</h1>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
+                                        <span>{{change_in_precentage}}%</span>
+                                    </div>
+                                </div>
+                                <div id="sparkline-revenue4"></div>
+                            </div>
+                        </div>
+                    </div>
                 <!-- ============================================================== -->
                 <!-- end pageheader -->
                 <!-- ============================================================== -->
@@ -636,7 +699,7 @@ John Abraham</h5>
                     
                 </div>
             </div>
-            <button type="button"> <a href="{% url 'download' %}">Export To CSV</a> </button>
+            <button type="button"> <a href="{% url 'download' 0 %}">Export To CSV</a> </button>
             <div class="row">
                 <!-- ============================================================== -->
                  <!-- basic table  -->
@@ -680,7 +743,7 @@ John Abraham</h5>
                          </div>
                      </div>
                  </div> 
-             </div>
+            </div>
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
@@ -725,7 +788,7 @@ John Abraham</h5>
         label: "{{ company }}" + " - High",
         data: {{ y_high| safe }},
     fill: false,
-      borderColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgb(255, 0, 192)',
         tension: 0.1
     }]
   };
@@ -739,7 +802,7 @@ John Abraham</h5>
         label: "{{ company }}" + " - Low",
         data: {{ y_low| safe }},
     fill: false,
-      borderColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgb(75, 0, 96)',
         tension: 0.1
     }]
   };
@@ -753,7 +816,7 @@ John Abraham</h5>
         label: "{{ company }}" + " - Open",
         data: {{ y_open| safe }},
     fill: false,
-      borderColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgb(0, 0, 192)',
         tension: 0.1
     }]
   };
@@ -767,7 +830,7 @@ John Abraham</h5>
         label: "{{ company }}" + "- Close",
         data: {{ y_close| safe }},
     fill: false,
-      borderColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgb(75, 10, 0)',
         tension: 0.1
     }]
   };
@@ -781,7 +844,7 @@ John Abraham</h5>
         label: "{{ company }}" + "- Volume",
         data: {{ y_volume| safe }},
     fill: false,
-      borderColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgb(75, 0, 150)',
         tension: 0.1
     }]
   };
@@ -796,7 +859,7 @@ John Abraham</h5>
         label: "{{ company }}",
         data: {{ predicted_y| safe }},
     fill: false,
-      borderColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgb(0, 192, 192)',
         tension: 0.1
     }]
   };

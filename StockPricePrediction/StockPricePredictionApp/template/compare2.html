@@ -477,6 +477,128 @@ John Abraham</h5>
                 <input type="date" id="close_date" name="close_date">
                     <button type="submit" class="btn btn-primary">Select</button>
                   </form>
+                  <button > <a href="{% url 'home' %}">Home</a> </button>
+
+                  <div class="ecommerce-widget">
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">{{company1}}<br> Last Day Price</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{ last_day_price_stock1 }}</h1>
+                                    </div>
+                                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
+                                    </div> -->
+                                </div>
+                                <div id="sparkline-revenue"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">{{company1}}<br> Highest Price in Given Period</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{ max_price_stock1}}</h1>
+                                    </div>
+                                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
+                                    </div> -->
+                                </div>
+                                <div id="sparkline-revenue2"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted"> {{company1}}<br> Lowest Price in Given Period</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{ min_price_stock1}}</h1>
+                                    </div>
+                                    <!-- <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                        <span>N/A</span>
+                                    </div> -->
+                                </div>
+                                <div id="sparkline-revenue3"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">{{company1}} <br>Change In Price In Given Period</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{change_in_price_stock1}}</h1>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
+                                        <span>{{change_in_precentage_stock1}}%</span>
+                                    </div>
+                                </div>
+                                <div id="sparkline-revenue4"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ecommerce-widget">
+
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="text-muted">{{company2}}<br> Last Day Price</h5>
+                                        <div class="metric-value d-inline-block">
+                                            <h1 class="mb-1">{{ last_day_price_stock2 }}</h1>
+                                        </div>
+                                        <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
+                                        </div> -->
+                                    </div>
+                                    <div id="sparkline-revenue"></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="text-muted"> {{company2}} <br>Highest Price in Given Period</h5>
+                                        <div class="metric-value d-inline-block">
+                                            <h1 class="mb-1">{{ max_price_stock2}}</h1>
+                                        </div>
+                                        <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
+                                        </div> -->
+                                    </div>
+                                    <div id="sparkline-revenue2"></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="text-muted">{{company2}} <br>Lowest Price in Given Period</h5>
+                                        <div class="metric-value d-inline-block">
+                                            <h1 class="mb-1">{{ min_price_stock2}}</h1>
+                                        </div>
+                                        <!-- <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                            <span>N/A</span>
+                                        </div> -->
+                                    </div>
+                                    <div id="sparkline-revenue3"></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="text-muted"> {{company2}}<br> Change In Price In Given Period</h5>
+                                        <div class="metric-value d-inline-block">
+                                            <h1 class="mb-1">{{change_in_price_stock2}}</h1>
+                                        </div>
+                                        <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
+                                            <span>{{change_in_precentage_stock2}}%</span>
+                                        </div>
+                                    </div>
+                                    <div id="sparkline-revenue4"></div>
+                                </div>
+                            </div>
+                        </div>
                 <div class="row">
                     <!-- ============================================================== -->
                     <!--  area chart  -->
@@ -641,6 +763,95 @@ John Abraham</h5>
                     <!-- end dount gauge  -->
                     <!-- ============================================================== -->
                 </div>
+            </div>
+            <button type="button"> <a href="{% url 'download' 1 %}">Export To CSV</a> </button>
+            <button type="button"> <a href="{% url 'download' 2 %}">Export To CSV</a> </button>
+            <div class="row">
+                <!-- ============================================================== -->
+                 <!-- basic table  -->
+                 <!-- ============================================================== -->
+                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                     <div class="card">
+                         <h5 class="card-header">{{company1}} Data</h5>
+                         <div class="card-body">
+                             <div class="table-responsive">
+                                 <table class="table table-striped table-bordered first">
+                                     <thead>
+                                         <tr>
+                                             <th>Date</th>
+                                             <th>Open</th>
+                                             <th>High</th>
+                                             <th>Low</th>
+                                             <th>Close</th>
+                                             <th>Volume</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody> 
+                                          {% for open,high,low,close,volume ,date in df1.values %}
+                                         <tr>
+                                             <td>{{date}}</td>
+                                             <td>{{open}}</td>
+                                             <td>{{high}}</td>
+                                             <td>{{low}}</td>
+                                             <td>{{close}}</td>
+                                             <td>{{volume}}</td>
+             
+                                             <!-- <td>{{high}}</td>
+                                             <td>{{low}}</td>
+                                             <td>{{open}}</td>
+                                             <td>{{close}}</td>
+                                             <td>{{volume}}
+                                             </td> -->
+                                         </tr>
+                                         {% endfor %}
+                                 </table>
+                             </div>
+                         </div>
+                     </div>
+                 </div> 
+            
+                <!-- ============================================================== -->
+                 <!-- basic table  -->
+                 <!-- ============================================================== -->
+                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                     <div class="card">
+                         <h5 class="card-header">{{company2}} Data</h5>
+                         <div class="card-body">
+                             <div class="table-responsive">
+                                 <table class="table table-striped table-bordered first">
+                                     <thead>
+                                         <tr>
+                                            <th>Date</th>
+                                             <th>Open</th>
+                                             <th>High</th>
+                                             <th>Low</th>
+                                             <th>Close</th>
+                                             <th>Volume</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody> 
+                                          {% for open,high,low,close,volume ,date in df2.values %}
+                                         <tr>
+                                            <td>{{date}}</td>
+                                             <td>{{open}}</td>
+                                             <td>{{high}}</td>
+                                             <td>{{low}}</td>
+                                             <td>{{close}}</td>
+                                             <td>{{volume}}</td>
+             
+                                             <!-- <td>{{high}}</td>
+                                             <td>{{low}}</td>
+                                             <td>{{open}}</td>
+                                             <td>{{close}}</td>
+                                             <td>{{volume}}
+                                             </td> -->
+                                         </tr>
+                                         {% endfor %}
+                                 </table>
+                             </div>
+                         </div>
+                     </div>
+                 </div> 
             </div>
             <!-- ============================================================== -->
             <!-- footer -->

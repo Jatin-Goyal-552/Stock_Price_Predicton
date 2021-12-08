@@ -15,7 +15,67 @@
     <link rel="stylesheet" href="{% static 'assets/vendor/charts/c3charts/c3.css' %}">
     <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
 </head>
-
+<style>
+    .bg-white {
+        background-color: #141326!important;
+    }
+    .dashboard-content {
+        background: #0a092a;
+        padding: 30px 30px 60px 30px;
+    }
+    .card-body {
+        background: #1c0f34;
+        padding: 0px;
+    }
+    .text-muted {
+        color: #a9f028 !important;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #42d28b;
+        margin: 0
+    px
+     0
+    px
+     15
+    px
+     0
+    px
+    ;
+        font-family: 'Circular Std Medium';
+    }
+    .card-header {
+        background-color: #0a1428;
+        border-bottom: 1
+    px
+     solid #e6e6f2;
+    }
+    .table thead th, .table th {
+        color: #e8ff96;
+        font-family: 'Circular Std Medium';
+    }
+    a {
+        color: #ffffff;
+    }
+    .attribute {
+        color: #dcdc16;
+        font-size: 26px;
+        text-align: center;
+    }
+    .value {
+        text-align: center;
+        font-size: 19px;
+    }
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 16px;
+        font-size: 30px;
+        color: #ffd266;
+        margin-top: 19px;
+        font-family: 'Ariana';
+        margin-left: 51px;
+    }
+</style>
 <body>
     <!-- ============================================================== -->
     <!-- main wrapper -->
@@ -26,11 +86,11 @@
         <!-- ============================================================== -->
        <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="../index.html">Concept</a>
+                <a class="navbar-brand" href="../index.html">$tonks</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <!-- <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-right-top">
                         <li class="nav-item">
                             <div id="custom-search" class="top-search-bar">
@@ -131,9 +191,9 @@ John Abraham</h5>
                             </div>
                         </li>
                     </ul>
-                </div>
-            </nav>
-        </div>
+                </div>-->
+             </nav> 
+    </div> 
         <!-- ============================================================== -->
         <!-- end navbar -->
         <!-- ============================================================== -->
@@ -143,7 +203,7 @@ John Abraham</h5>
         <div class="nav-left-sidebar sidebar-dark">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+                    <a class="d-xl-none d-lg-none" href="#">Home</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -153,8 +213,8 @@ John Abraham</h5>
                                 Menu
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Dashboard <span class="badge badge-success">6</span></a>
-                                <div id="submenu-1" class="collapse submenu" style="">
+                                <a class="nav-link " href="{% url 'home' %}" ><i class="fa fa-fw fa-user-circle"></i>Home <span class="badge badge-success">6</span></a>
+                                <!-- <div id="submenu-1" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
                                             <a class="nav-link" href="index.html" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">E-Commerce</a>
@@ -198,11 +258,11 @@ John Abraham</h5>
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-rocket"></i>UI Elements</a>
-                                <div id="submenu-2" class="collapse submenu" style="">
+                                <a class="nav-link active" href="{% url 'compare' %}" ><i class="fa fa-fw fa-rocket"></i>Compare Two Stocks</a>
+                                <!-- <div id="submenu-2" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
                                             <a class="nav-link" href="cards.html">Cards <span class="badge badge-secondary">New</span></a>
@@ -226,11 +286,11 @@ John Abraham</h5>
                                             <a class="nav-link" href="tabs.html">Tabs</a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-fw fa-chart-pie"></i>Chart</a>
-                                <div id="submenu-3" class="collapse submenu" style="">
+                                <a class="nav-link" href="{% url 'predict' %}" ><i class="fas fa-fw fa-chart-pie"></i>Predict Stock Prices</a>
+                                <!-- <div id="submenu-3" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
                                             <a class="nav-link" href="chart-c3.html">C3 Charts</a>
@@ -251,7 +311,7 @@ John Abraham</h5>
                                             <a class="nav-link" href="chart-gauge.html">Guage</a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fab fa-fw fa-wpforms"></i>Forms</a>
@@ -431,54 +491,80 @@ John Abraham</h5>
         <!-- ============================================================== -->
         <!-- wrapper  -->
         <!-- ============================================================== -->
+       
         <div class="dashboard-wrapper">
             <div class="container-fluid  dashboard-content">
-                <!-- ============================================================== -->
-                <!-- pageheader -->
-                <!-- ============================================================== -->
-                <!-- <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <div class="page-header">
-                           
-                            <div class="page-breadcrumb">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Charts</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">C3 Charts</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- ============================================================== -->
-                <!-- end pageheader -->
-                <!-- ============================================================== -->
-                <form class="px-4 py-3" method="POST" action=" ">
+                {% if not flag %}
+                <h1 style="text-align: center;
+               
+                color: #e4a959;
+                font-family: 'Circular Std Book';
+                margin-top: 2%;border-style: solid;">Please Submit Following Details </h1>
+                <form class="px-4 py-3" method="POST" action=" " style="margin-left: 35%;
+                margin-top: 4%;font-family: 'Circular Std Book';">
                     {% csrf_token %}
-                    <select name="company1" style="font-size: 15px;width:226px;">
-                      <option selected disabled="true">--SELECT FIRST COMPANY--</option>
+                    <label for="Comapny1" style="margin-left: 25px ;">Select Company1:</label>
+                    <br>
+                    <!-- <select name="company1" style="font-size: 21px;
+                    width: 246px;
+                    height: 33px;">
+                      <option selected disabled="true">--SELECT COMPANY--</option>
                       <option value="0">Bitcoin</option>
                       <option value="1">Apple</option>
                       <option value="2">Google</option>
-                      <!-- <option value="3">1920.0 x 1080.0</option> -->
-                    </select>
-                    <select name="company2" style="font-size: 15px;width:226px;">
-                        <option selected disabled="true">--SELECT SECOND COMPANY--</option>
-                        <option value="0">Bitcoin</option>
-                        <option value="1">Apple</option>
-                        <option value="2">Google</option>
-                        <!-- <option value="3">1920.0 x 1080.0</option> -->
-                      </select>
+                    </select> -->
+                    <input style="font-size: 16px;
+                    width: 255px;
+                    height: 33px;color:#000000" type="text" id="fname" name="company1" placeholder="Enter Yahoo Code For Comapny1" ><br>
+                    <label for="Comapny2" style="margin-left: 25px ;">Select Company2:</label>
+                    <br>
+                    <!-- <select name="company1" style="font-size: 21px;
+                    width: 246px;
+                    height: 33px;">
+                      <option selected disabled="true">--SELECT COMPANY--</option>
+                      <option value="0">Bitcoin</option>
+                      <option value="1">Apple</option>
+                      <option value="2">Google</option>
+                    </select> -->
+                    <input style="font-size: 16px;
+                    width: 255px;
+                    height: 33px;color:#000000" type="text" id="fname" name="company2" placeholder="Enter Yahoo Code For Comapny2" >
+                    <!-- <select id="select_page" style="width:200px;" class="operator"> 
+                        <option value="">Select a Page...</option>
+                        <option value="alpha">alpha</option> 
+                        <option value="beta">beta</option>
+                        <option value="theta">theta</option>
+                        <option value="omega">omega</option>
+                 </select> -->
+                    <br>
                     <label for="birthday">Start Date:</label>
-                <input type="date" id="start_date" name="start_date">
-                <label for="birthday">Close Date:</label>
-                <input type="date" id="close_date" name="close_date">
-                    <button type="submit" class="btn btn-primary">Select</button>
+                    <br>
+                    <input type="date" id="start_date" name="start_date" style="    width: 35%;
+                    font-size: 22px;">
+                    <br>
+                    <label for="birthday">End Date:</label>
+                    <br>
+                    <input type="date" id="close_date" name="close_date" style="    width: 35%;
+                    font-size: 22px;">
+                    <br>
+                    <button type="submit" class="btn btn-primary" style="    background: #2a2c2c;
+                    font-size: 27px;
+                    margin-top: 7%;
+                    color: #ffd266;
+                    border: aliceblue;
+                    font-family: 'Ariana';
+                    margin-left: 5%;
+                    border-radius: 17px;
+                    width: 21%;
+                ">Select</button>
                   </form>
-                  <button > <a href="{% url 'home' %}">Home</a> </button>
-
+                  {% else %}
+                  <div class="row" >
+                    <h1 class="form_input" style="font-size: 30px;
+                    margin: 4% 15%;
+                    color: #cac953;
+                    text-decoration: underline;">Comparing {{company1}}  v/s {{company2}}  From {{start_date}} to {{close_date}}</h1>
+                </div>
                   <div class="ecommerce-widget">
 
                     <div class="row">
@@ -609,7 +695,7 @@ John Abraham</h5>
                             <div class="card-body">
                                 <div class="card">
                                     <div id="container" style="width: 100%;">
-                                        <canvas id="pie-chart-compare"></canvas>
+                                        <canvas id="pie-chart-compare" style="background: rgb(1 22 44);color:rgb(247, 247, 247)"></canvas>
                                       </div>
                             </div>
                             </div>
@@ -629,7 +715,7 @@ John Abraham</h5>
                             <div class="card-body">
                                 <div class="card">
                                     <div id="container" style="width: 100%;">
-                                        <canvas id="pie-chart-open"></canvas>
+                                        <canvas id="pie-chart-open" style="background: rgb(1 22 44);color:rgb(247, 247, 247)"></canvas>
                                       </div>
                                 </div>
                             </div>
@@ -641,7 +727,7 @@ John Abraham</h5>
                             <div class="card-body">
                                 <div class="card">
                                     <div id="container" style="width: 100%;">
-                                        <canvas id="pie-chart-low"></canvas>
+                                        <canvas id="pie-chart-low" style="background: rgb(1 22 44);color:rgb(247, 247, 247)"></canvas>
                                       </div>
                                 </div>
                             </div>
@@ -661,7 +747,7 @@ John Abraham</h5>
                             <div class="card-body">
                                 <div class="card">
                                     <div style="width: 100%;">
-                                        <canvas id="pie-chart-close"></canvas>
+                                        <canvas id="pie-chart-close" style="background: rgb(1 22 44);color:rgb(247, 247, 247)"></canvas>
                                       </div>
                                 </div>
                             </div>
@@ -679,7 +765,7 @@ John Abraham</h5>
                             <div class="card-body">
                                 <div class="card">
                                     <div style="width: 100%;">
-                                        <canvas id="pie-chart-volume"></canvas>
+                                        <canvas id="pie-chart-volume" style="background: rgb(1 22 44);color:rgb(247, 247, 247)"></canvas>
                                       </div>
                                 </div>
                             </div>
@@ -693,28 +779,28 @@ John Abraham</h5>
                     <!-- ============================================================== -->
                     <!--  stacked chart  -->
                     <!-- ============================================================== -->
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">Stacked Bar </h5>
                             <div class="card-body">
                                 <div id="c3chart_stacked"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- ============================================================== -->
                     <!--  end stacked chart  -->
                     <!-- ============================================================== -->
                     <!-- ============================================================== -->
                     <!--  combination chart  -->
                     <!-- ============================================================== -->
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">Combination Chart </h5>
                             <div class="card-body">
                                 <div id="c3chart_combine"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- ============================================================== -->
                     <!--  end combination chart  -->
                     <!-- ============================================================== -->
@@ -723,56 +809,63 @@ John Abraham</h5>
                     <!-- ============================================================== -->
                     <!-- pie chart  -->
                     <!-- ============================================================== -->
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                    <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">Pie Chart </h5>
                             <div class="card-body">
                                 <div id="c3chart_pie"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- ============================================================== -->
                     <!-- end pie chart  -->
                     <!-- ============================================================== -->
                     <!-- ============================================================== -->
                     <!-- dount chart  -->
                     <!-- ============================================================== -->
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                    <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">Donut Chart </h5>
                             <div class="card-body">
                                 <div id="c3chart_donut"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- ============================================================== -->
                     <!-- end dount chart  -->
                     <!-- ============================================================== -->
                     <!-- ============================================================== -->
                     <!-- dount gauge  -->
                     <!-- ============================================================== -->
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                    <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">Donut Guage </h5>
                             <div class="card-body">
                                 <div id="c3chart_gauge"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- ============================================================== -->
                     <!-- end dount gauge  -->
                     <!-- ============================================================== -->
                 </div>
             </div>
-            <button type="button"> <a href="{% url 'download' 1 %}">Export To CSV</a> </button>
-            <button type="button"> <a href="{% url 'download' 2 %}">Export To CSV</a> </button>
-            <div class="row">
+            <button type="button" style="font-size: 20px;
+            color: #ccf212;
+            background: #0e1f28;
+        "> <a href="{% url 'download' 1 %}">Export To CSV</a> </button>
+        <h5 class="card-header">{{company1}} Data</h5>
+            <div class="row" style="color:white">
                 <!-- ============================================================== -->
                  <!-- basic table  -->
                  <!-- ============================================================== -->
-                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6" style="flex: 0 0 100%;
+                 max-width: 100%;
+                 max-height: 500px;
+                 overflow: scroll;
+             ">
                      <div class="card">
-                         <h5 class="card-header">{{company1}} Data</h5>
+                         
                          <div class="card-body">
                              <div class="table-responsive">
                                  <table class="table table-striped table-bordered first">
@@ -810,12 +903,23 @@ John Abraham</h5>
                      </div>
                  </div> 
             
-                <!-- ============================================================== -->
+             </div>  
+                 <!-- ============================================================== -->
                  <!-- basic table  -->
                  <!-- ============================================================== -->
-                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                 <button type="button" style="font-size: 20px;
+                 color: #ccf212;
+                 background: #0e1f28;margin-top:3%;
+             "> <a href="{% url 'download' 2 %}">Export To CSV</a> </button>
+             <h5 class="card-header">{{company2}} Data</h5>
+             <div class="row" style="color:white">
+                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6" style="flex: 0 0 100%;
+                 max-width: 100%;
+                 max-height: 500px;
+                 overflow: scroll;
+             ">
                      <div class="card">
-                         <h5 class="card-header">{{company2}} Data</h5>
+                        
                          <div class="card-body">
                              <div class="table-responsive">
                                  <table class="table table-striped table-bordered first">
@@ -853,10 +957,11 @@ John Abraham</h5>
                      </div>
                  </div> 
             </div>
+            {% endif %}
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <div class="footer">
+            <div class="footer" style="margin-top:9%">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
@@ -890,7 +995,7 @@ John Abraham</h5>
     <script src="{% static 'assets/libs/js/main-js.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
-
+        Chart.defaults.global.defaultFontColor= '#fff';
         const labels = {{ x| safe }};
         const data_compare = {
             labels: labels,

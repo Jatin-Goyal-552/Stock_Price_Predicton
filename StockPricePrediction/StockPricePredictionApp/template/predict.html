@@ -13,10 +13,7 @@
     <link rel="stylesheet" href="{% static 'assets/libs/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/vendor/fonts/fontawesome/css/fontawesome-all.css' %}">
     <link rel="stylesheet" href="{% static 'assets/vendor/charts/c3charts/c3.css' %}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-    <title>$tonks</title>
+    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
 </head>
 <style>
     .bg-white {
@@ -216,7 +213,7 @@ John Abraham</h5>
                                 Menu
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="{% url 'home' %}" ><i class="fa fa-fw fa-user-circle"></i>Home <span class="badge badge-success">6</span></a>
+                                <a class="nav-link " href="{% url 'home' %}" ><i class="fa fa-fw fa-user-circle"></i>Home <span class="badge badge-success">6</span></a>
                                 <!-- <div id="submenu-1" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
@@ -292,7 +289,7 @@ John Abraham</h5>
                                 </div> -->
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'predict' %}" ><i class="fas fa-fw fa-chart-pie"></i>Predict Stock Prices</a>
+                                <a class="nav-link active" href="{% url 'predict' %}" ><i class="fas fa-fw fa-chart-pie"></i>Predict Stock Prices</a>
                                 <!-- <div id="submenu-3" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
@@ -527,7 +524,21 @@ John Abraham</h5>
                         <option value="omega">omega</option>
                  </select> -->
                     <br>
-                    <label for="birthday">Start Date:</label>
+                    <label for="Comapny1" style="margin-left: 25px ;">No. Of days to Predict:</label>
+                    <br>
+                    <!-- <select name="company1" style="font-size: 21px;
+                    width: 246px;
+                    height: 33px;">
+                      <option selected disabled="true">--SELECT COMPANY--</option>
+                      <option value="0">Bitcoin</option>
+                      <option value="1">Apple</option>
+                      <option value="2">Google</option>
+                    </select> -->
+                    <input style="font-size: 16px;
+                    width: 255px;
+                    height: 33px;color:#000000" type="text" id="fname" name="days" placeholder="No. Of days to Predict:" >
+                    <br>
+                    <!-- <label for="birthday">Start Date:</label>
                     <br>
                     <input type="date" id="start_date" name="start_date" style="    width: 35%;
                     font-size: 22px;">
@@ -536,7 +547,7 @@ John Abraham</h5>
                     <br>
                     <input type="date" id="close_date" name="close_date" style="    width: 35%;
                     font-size: 22px;">
-                    <br>
+                    <br> -->
                     <button type="submit" class="btn btn-primary" style="    background: #2a2c2c;
                     font-size: 27px;
                     margin-top: 7%;
@@ -573,84 +584,38 @@ John Abraham</h5>
                 {% elif flag %}
                 <div class="row" >
                     <h1 class="form_input" style="font-size: 30px;
-                    margin: 4% 18%;
+                    margin: 4% 27%;
                     color: #cac953;
-                    text-decoration: underline;">Presenting {{company}} Data From {{start_date}} to {{close_date}}</h1>
+                    text-decoration: underline;">Predicting {{company}} Data For Next {{days}} Days</h1>
                 </div>
-                <div class="ecommerce-widget">
-
-                    <div class="row">
-                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="text-muted">Last Day Price</h5>
-                                    <div class="metric-value d-inline-block">
-                                        <h1 class="mb-1">{{ last_day_price }}</h1>
-                                    </div>
-                                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
-                                    </div> -->
-                                </div>
-                                <div id="sparkline-revenue"></div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="text-muted">Highest Price in Given Period</h5>
-                                    <div class="metric-value d-inline-block">
-                                        <h1 class="mb-1">{{ max_price}}</h1>
-                                    </div>
-                                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
-                                    </div> -->
-                                </div>
-                                <div id="sparkline-revenue2"></div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="text-muted">Lowest Price in Given Period</h5>
-                                    <div class="metric-value d-inline-block">
-                                        <h1 class="mb-1">{{ min_price}}</h1>
-                                    </div>
-                                    <!-- <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
-                                        <span>N/A</span>
-                                    </div> -->
-                                </div>
-                                <div id="sparkline-revenue3"></div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="text-muted">Change In Price In Given Period</h5>
-                                    <div class="metric-value d-inline-block">
-                                        <h1 class="mb-1">{{change_in_price}}</h1>
-                                    </div>
-                                    <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
-                                        <span>{{change_in_precentage}}%</span>
-                                    </div>
-                                </div>
-                                <div id="sparkline-revenue4"></div>
-                            </div>
-                        </div>
-                    </div>
-                <!-- ============================================================== -->
-                <!-- end pageheader -->
-                <!-- ============================================================== -->
                 <div class="row">
                     <!-- ============================================================== -->
                     <!--  area chart  -->
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">Highest Price Chart</h5>
+                            <h5 class="card-header">Predicted Price Chart</h5>
                             <div class="card-body">
                                 <div class="card">
                             <div style="width: 100%;">
-                                <canvas id="pie-chart-high" style="background: rgb(1 22 44);color:rgb(247, 247, 247)"></canvas>
+                                <canvas id="pie-chart-predict" style="background: rgb(18 18 18);"></canvas>
+                              </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!--  area chart  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">Actual Price Chart</h5>
+                            <div class="card-body">
+                                <div class="card">
+                            <div style="width: 100%;">
+                                <canvas id="pie-chart-high" style="background: rgb(18 18 18);"></canvas>
                               </div>
                             </div>
                             </div>
@@ -663,14 +628,14 @@ John Abraham</h5>
                     <!-- ============================================================== -->
                     <!--  spline chart  -->
                     <!-- ============================================================== -->
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">Open Price Chart</h5>
                             <div class="card-body">
                                 <div class="card">
-                                    <div style="width: 100%; ">
-                                        <canvas id="pie-chart-open" style="background: rgb(18 18 18);"></canvas>
+                                    <div style="width: 100%;">
+                                        <canvas id="pie-chart-open"></canvas>
                                       </div>
                                 </div>
                             </div>
@@ -682,13 +647,13 @@ John Abraham</h5>
                             <div class="card-body">
                                 <div class="card">
                                     <div style="width: 100%;">
-                                        <canvas id="pie-chart-low" style="background: rgb(18 18 18);"></canvas>
+                                        <canvas id="pie-chart-low"></canvas>
                                       </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- ============================================================== -->
                 <!-- end  spline chart  -->
                 <!-- ============================================================== -->
@@ -696,37 +661,37 @@ John Abraham</h5>
                     <!-- ============================================================== -->
                     <!--  zoom chart  -->
                     <!-- ============================================================== -->
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">Close Price Chart</h5>
                             <div class="card-body">
                                 <div class="card">
                                     <div style="width: 100%;">
-                                        <canvas id="pie-chart-close" style="background: rgb(18 18 18);"></canvas>
+                                        <canvas id="pie-chart-close"></canvas>
                                       </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
+                    <!-- </div> -->
                     <!-- ============================================================== -->
                     <!--  end zoom chart  -->
                     <!-- ============================================================== -->
                     <!-- ============================================================== -->
                     <!--  scatter chart  -->
                     <!-- ============================================================== -->
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">Volume Chart</h5>
                             <div class="card-body">
                                 <div class="card">
                                     <div style="width: 100%;">
-                                        <canvas id="pie-chart-volume" style="background: rgb(18 18 18);"></canvas>
+                                        <canvas id="pie-chart-volume"></canvas>
                                       </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- ============================================================== -->
                 <!--  end scatter chart  -->
                 <!-- ============================================================== -->
@@ -734,8 +699,8 @@ John Abraham</h5>
                     <!-- ============================================================== -->
                     <!--  stacked chart  -->
                     <!-- ============================================================== -->
-                    <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <div class="card">
+                    <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"> -->
+                        <!-- <div class="card">
                             <h5 class="card-header">Stacked Bar </h5>
                             <div class="card-body">
                                 <div id="c3chart_stacked"></div>
@@ -806,12 +771,9 @@ John Abraham</h5>
                     
                 </div>
             </div>
-            <button type="button" style="font-size: 20px;
-            color: #ccf212;
-            background: #0e1f28;
-        "> <a href="{% url 'download' 0 %}">Export To CSV</a> </button>
-        <h5 class="card-header">{{company}} Data</h5>
+            <!-- <button type="button"> <a href="{% url 'download' 0 %}">Export To CSV</a> </button> -->
             <div class="row" style="color:white">
+                <h5 class="card-header">{{company}} Predicted Data</h5>
                 <!-- ============================================================== -->
                  <!-- basic table  -->
                  <!-- ============================================================== -->
@@ -828,22 +790,22 @@ John Abraham</h5>
                                      <thead>
                                          <tr>
                                              <th>Date</th>
-                                             <th>Open</th>
-                                             <th>High</th>
+                                             <th>Predicted Close Price</th>
+                                             <!-- <th>High</th>
                                              <th>Low</th>
                                              <th>Close</th>
-                                             <th>Volume</th>
+                                             <th>Volume</th> -->
                                          </tr>
                                      </thead>
                                      <tbody> 
-                                          {% for open,high,low,close,volume ,date in df.values %}
+                                          {% for date,predicted in csv %}
                                          <tr>
                                              <td>{{date}}</td>
-                                             <td>{{open}}</td>
-                                             <td>{{high}}</td>
+                                             <td>{{predicted}}</td>
+                                             <!-- <td>{{high}}</td>
                                              <td>{{low}}</td>
                                              <td>{{close}}</td>
-                                             <td>{{volume}}</td>
+                                             <td>{{volume}}</td> -->
              
                                              <!-- <td>{{high}}</td>
                                              <td>{{low}}</td>
@@ -859,23 +821,11 @@ John Abraham</h5>
                      </div>
                  </div> 
             </div>
-            <h5 class="card-header" style="margin-top:2%;">{{company}} Description</h5>
-            <div class='description' style='max-height: 500px;
-                overflow: scroll;margin-top: 0%;'>
-                
-                {% for key,value in description.items %}
-                
-                <h1 class="attribute">{{key}}</h1>
-                <h5 class="value">{{value}}</h5>
-                
-                {% endfor %}
-            </div>
-
             {% endif %}
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <div class="footer" style="margin-top:9%">
+            <div class="footer" style="margin-top:5%">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
@@ -910,113 +860,42 @@ John Abraham</h5>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <script>
     Chart.defaults.global.defaultFontColor= '#fff';
-    $(document).ready(function () {
-        //change selectboxes to selectize mode to be searchable
-           $("select").select2();
-        });
-
+    const labels_predict = {{ predicted_x| safe }};
+    const data_predict = {
+      labels: labels_predict,
+      datasets: [{
+        label: "{{ company }}" + " - Predicted",
+        data: {{ predicted_y| safe }},
+    fill: false,
+      borderColor: 'rgb(255, 0, 192)',
+        tension: 0.1
+    }]
+  };
+    const config_predict = {
+      type: 'line',
+      data: data_predict,
+    };
     const labels = {{ x| safe }};
     const data_high = {
       labels: labels,
       datasets: [{
-        label: "{{ company }}" + " - High",
+        label: "{{ company }}" + " - Actual",
         data: {{ y_high| safe }},
-    fill: true,
+    fill: false,
       borderColor: 'rgb(255, 0, 192)',
-        tension: 0.1,
-        backgroundColor: 
-      'rgb(20, 20, 20)',
+        tension: 0.1
     }]
   };
     const config_high = {
       type: 'line',
-      data: data_high
+      data: data_high,
     };
-    const data_low = {
-      labels: labels,
-      datasets: [{
-        label: "{{ company }}" + " - Low",
-        data: {{ y_low| safe }},
-    fill: false,
-      borderColor: 'rgb(75, 0, 96)',
-        tension: 0.1    }]
-  };
-    const config_low = {
-      type: 'line',
-      data: data_low,
-    };
-    const data_open = {
-      labels: labels,
-      datasets: [{
-        label: "{{ company }}" + " - Open",
-        data: {{ y_open| safe }},
-    fill: false,
-      borderColor: 'rgb(0, 0, 192)',
-        tension: 0.1
-    }]
-  };
-    const config_open = {
-      type: 'line',
-      data: data_open,
-    };
-    const data_close = {
-      labels: labels,
-      datasets: [{
-        label: "{{ company }}" + "- Close",
-        data: {{ y_close| safe }},
-    fill: false,
-      borderColor: 'rgb(75, 10, 0)',
-        tension: 0.1
-    }]
-  };
-    const config_close = {
-      type: 'line',
-      data: data_close,
-    };
-    const data_volume = {
-      labels: labels,
-      datasets: [{
-        label: "{{ company }}" + "- Volume",
-        data: {{ y_volume| safe }},
-    fill: false,
-      borderColor: 'rgb(75, 0, 150)',
-        tension: 0.1
-    }]
-  };
-    const config_volume = {
-      type: 'line',
-      data: data_volume,
-    };
-    const labels2 = {{ predicted_x| safe }};
-    const data2 = {
-      labels: labels2,
-      datasets: [{
-        label: "{{ company }}",
-        data: {{ predicted_y| safe }},
-    fill: false,
-      borderColor: 'rgb(0, 192, 192)',
-        tension: 0.1
-    }]
-  };
-    const config2 = {
-      type: 'line',
-      data: data2,
-    };
-
     window.onload = function () {
+      var ctx_predict = document.getElementById('pie-chart-predict').getContext('2d');
+      window.myPie = new Chart(ctx_predict, config_predict);
       var ctx_high = document.getElementById('pie-chart-high').getContext('2d');
       window.myPie = new Chart(ctx_high, config_high);
-      var ctx_low = document.getElementById('pie-chart-low').getContext('2d');
-      window.myPie = new Chart(ctx_low, config_low);
-      var ctx_open = document.getElementById('pie-chart-open').getContext('2d');
-      window.myPie = new Chart(ctx_open, config_open);
-      var ctx_close = document.getElementById('pie-chart-close').getContext('2d');
-      window.myPie = new Chart(ctx_close, config_close);
-      var ctx_volume = document.getElementById('pie-chart-volume').getContext('2d');
-      window.myPie = new Chart(ctx_volume, config_volume);
-
-      var ctx2 = document.getElementById('pie-chart2').getContext('2d');
-      window.myPie = new Chart(ctx2, config2);
+      
     };
   </script>
 </body>

@@ -8,6 +8,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="{% static 'contact/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
     <link href="{% static 'assets/vendor/fonts/circular-std/style.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'assets/libs/css/style.css' %}">
@@ -74,6 +79,32 @@
         margin-top: 19px;
         font-family: 'Ariana';
         margin-left: 51px;
+    }
+    .heading-section {
+        font-size: 34px;
+        color: #fff;
+    }
+    .form-control {
+        display: block;
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #71748d;
+        background-color: #1e252a;
+        background-image: none;
+        border: 1px solid #d2d2e4;
+        border-radius: 2px;
+    }
+    .form-control:focus, .form-control:active {
+        border-color: #1e252a !important;
+        background: #1e252a;
+    }
+    .btn.btn-primary {
+        background: #ce9b52 !important;
+        border-color: #bc9864 !important;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 600;
     }
 </style>
 <body>
@@ -495,7 +526,7 @@ John Abraham</h5>
         <div class="dashboard-wrapper">
             <div class="container-fluid  dashboard-content">
                 {% if not flag %}
-                <h1 style="text-align: center;
+                <!-- <h1 style="text-align: center;
                
                 color: #e4a959;
                 font-family: 'Circular Std Book';
@@ -504,7 +535,7 @@ John Abraham</h5>
                 margin-top: 4%;font-family: 'Circular Std Book';">
                     {% csrf_token %}
                     <label for="Comapny1" style="margin-left: 25px ;">Select Company:</label>
-                    <br>
+                    <br> -->
                     <!-- <select name="company1" style="font-size: 21px;
                     width: 246px;
                     height: 33px;">
@@ -513,9 +544,9 @@ John Abraham</h5>
                       <option value="1">Apple</option>
                       <option value="2">Google</option>
                     </select> -->
-                    <input style="font-size: 16px;
+                    <!-- <input style="font-size: 16px;
                     width: 255px;
-                    height: 33px;color:#000000" type="text" id="fname" name="company1" placeholder="Enter Yahoo Code For Comapny" >
+                    height: 33px;color:#000000" type="text" id="fname" name="company1" placeholder="Enter Yahoo Code For Comapny" > -->
                     <!-- <select id="select_page" style="width:200px;" class="operator"> 
                         <option value="">Select a Page...</option>
                         <option value="alpha">alpha</option> 
@@ -523,9 +554,9 @@ John Abraham</h5>
                         <option value="theta">theta</option>
                         <option value="omega">omega</option>
                  </select> -->
-                    <br>
+                    <!-- <br>
                     <label for="Comapny1" style="margin-left: 25px ;">No. Of days to Predict:</label>
-                    <br>
+                    <br> -->
                     <!-- <select name="company1" style="font-size: 21px;
                     width: 246px;
                     height: 33px;">
@@ -534,9 +565,9 @@ John Abraham</h5>
                       <option value="1">Apple</option>
                       <option value="2">Google</option>
                     </select> -->
-                    <input style="font-size: 16px;
+                    <!-- <input style="font-size: 16px;
                     width: 255px;
-                    height: 33px;color:#000000" type="text" id="fname" name="days" placeholder="No. Of days to Predict:" >
+                    height: 33px;color:#000000" type="text" id="fname" name="days" placeholder="No. Of days to Predict:" > -->
                     <br>
                     <!-- <label for="birthday">Start Date:</label>
                     <br>
@@ -548,7 +579,7 @@ John Abraham</h5>
                     <input type="date" id="close_date" name="close_date" style="    width: 35%;
                     font-size: 22px;">
                     <br> -->
-                    <button type="submit" class="btn btn-primary" style="    background: #2a2c2c;
+                    <!-- <button type="submit" class="btn btn-primary" style="    background: #2a2c2c;
                     font-size: 27px;
                     margin-top: 7%;
                     color: #ffd266;
@@ -558,7 +589,7 @@ John Abraham</h5>
                     border-radius: 17px;
                     width: 21%;
                 ">Select</button>
-                  </form>
+                  </form> -->
                   <!-- <button > <a href="{% url 'compare' %}">Compare</a> </button> -->
                 <!-- ============================================================== -->
                 <!-- pageheader -->
@@ -579,7 +610,100 @@ John Abraham</h5>
                         </div>
                     </div>
                 </div> -->
-
+                <section class="ftco-section">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 text-center mb-5">
+                                <h2 class="heading-section">Please Fill Following Details</h2>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10 col-md-12">
+                                <div class="wrapper">
+                                    <div class="row justify-content-center">
+                                        <!-- <div class="col-lg-8 mb-5">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="dbox w-100 text-center">
+                                                <div class="icon d-flex align-items-center justify-content-center">
+                                                    <span class="fa fa-map-marker"></span>
+                                                </div>
+                                                <div class="text">
+                                                <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+                                              </div>
+                                          </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="dbox w-100 text-center">
+                                                <div class="icon d-flex align-items-center justify-content-center">
+                                                    <span class="fa fa-phone"></span>
+                                                </div>
+                                                <div class="text">
+                                                <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+                                              </div>
+                                          </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="dbox w-100 text-center">
+                                                <div class="icon d-flex align-items-center justify-content-center">
+                                                    <span class="fa fa-paper-plane"></span>
+                                                </div>
+                                                <div class="text">
+                                                <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+                                              </div>
+                                          </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-lg-8">
+                                            <div class="contact-wrap">
+                                                <!-- <h3 class="mb-4 text-center">Please Fill Following Details </h3> -->
+                                                <div id="form-message-warning" class="mb-4 w-100 text-center"></div> 
+                                          <div id="form-message-success" class="mb-4 w-100 text-center">
+                                        Your message was sent, thank you!
+                                          </div>
+                                                <form method="POST" id="contactForm" name="contactForm" class="contactForm" >
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h3 class="mb-3 mt-4 text-center">Enter Yahoo Code of Company: </h3>
+                                                            <div >
+                                                                <input type="text" class="form-control" name="company1" id="name" placeholder="Enter Yahoo Code For Stocks">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12"> 
+                                                            <h3 class="mb-3 mt-4 text-center">Enter Number Of Days To Predict: </h3>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" name="days" id="name" placeholder="Enter Number Of Days To Predict">
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="col-md-12">
+                                                            <h3 class="mb-3 mt-4  text-center">Enter End Date: </h3>
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="date" id="close_date" name="close_date" >
+                                                            </div>
+                                                        </div> -->
+                                                        <!-- <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <textarea name="message" class="form-control" id="message" cols="30" rows="8" placeholder="Message"></textarea>
+                                                            </div>
+                                                        </div> -->
+                                                        <div class="col-md-12 mt-3" >
+                                                            <div class="form-group">
+                                                                <input type="submit" value="SUbmit " class="btn btn-primary">
+                                                                <div class="submitting"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <!-- <p>{{info}}</p> -->
                 {% elif flag %}
                 <div class="row" >
@@ -797,7 +921,9 @@ John Abraham</h5>
                                              <th>Volume</th> -->
                                          </tr>
                                      </thead>
-                                     <tbody> 
+                                     <tbody style="
+                                     color: white;
+                                 "> 
                                           {% for date,predicted in csv %}
                                          <tr>
                                              <td>{{date}}</td>
@@ -867,7 +993,7 @@ John Abraham</h5>
         label: "{{ company }}" + " - Predicted",
         data: {{ predicted_y| safe }},
     fill: false,
-      borderColor: 'rgb(255, 0, 192)',
+      borderColor: 'rgb(0, 255, 0)',
         tension: 0.1
     }]
   };
@@ -882,7 +1008,7 @@ John Abraham</h5>
         label: "{{ company }}" + " - Actual",
         data: {{ y_high| safe }},
     fill: false,
-      borderColor: 'rgb(255, 0, 192)',
+      borderColor: 'rgb(200, 255, 0)',
         tension: 0.1
     }]
   };

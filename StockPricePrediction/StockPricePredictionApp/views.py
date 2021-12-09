@@ -322,18 +322,18 @@ def predict(request):
         print("x_train.shape",x_train.shape)
         # model = prophet.Prophet(yearly_seasonality=True, weekly_seasonality=True, seasonality_mode="additive")
 
-        # stop = EarlyStopping(
-        # monitor='val_loss', 
-        # mode='min',
-        # patience=25
-        # )
+        stop = EarlyStopping(
+        monitor='val_loss', 
+        mode='min',
+        patience=10
+        )
 
-        # checkpoint= ModelCheckpoint(
-        #     filepath='./',
-        #     save_weights_only=True,
-        #     monitor='val_loss',
-        #     mode='min',
-        #     save_best_only=True)
+        checkpoint= ModelCheckpoint(
+            filepath='./',
+            save_weights_only=True,
+            monitor='val_loss',
+            mode='min',
+            save_best_only=True)
 
         model=Sequential()
         model.add(LSTM(200,return_sequences=True,input_shape=(x_train.shape[1],1)))
@@ -344,13 +344,14 @@ def predict(request):
         adam = optimizers.Adam(lr=0.0005)
 
         model.compile(optimizer=adam, loss='mse')
-        checkpoint= ModelCheckpoint(
-            filepath='./',
-            save_weights_only=True,
-            monitor='val_loss',
-            mode='min',
-            save_best_only=True)
-        model.fit(x_train, y_train, batch_size=128, epochs=50,shuffle=True, validation_split=0.05, callbacks = [checkpoint])
+        # checkpoint= ModelCheckpoint(
+        #     filepath='./',
+        #     save_weights_only=True,
+        #     monitor='val_loss',
+        #     mode='min',
+        #     save_best_only=True)
+        # model.load("/")
+        model.fit(x_train, y_train, batch_size=128, epochs=50,shuffle=True, validation_split=0.05, callbacks = [checkpoint,stop])
         model.load_weights("./")
         df_test=bitcoin.history(start='2000-01-01', end='2022-05-13', actions=False)
         df_test=df_test.drop(['Open','High','Volume','Low'],axis=1)

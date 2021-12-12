@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -106,6 +107,24 @@
         text-transform: uppercase;
         font-weight: 600;
     }
+    #pageloader
+{
+  background: rgba( 255, 255, 255, 0.8 );
+  display: none;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+}
+
+#pageloader img
+{
+  left: 50%;
+  margin-left: -32px;
+  margin-top: -32px;
+  position: absolute;
+  top: 50%;
+}
 </style>
 <body>
     <!-- ============================================================== -->
@@ -225,6 +244,9 @@ John Abraham</h5>
                 </div>-->
              </nav> 
     </div> 
+    <div id="pageloader">
+        <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="processing..." />
+     </div>
         <!-- ============================================================== -->
         <!-- end navbar -->
         <!-- ============================================================== -->
@@ -690,7 +712,7 @@ John Abraham</h5>
                                                         </div> -->
                                                         <div class="col-md-12 mt-3" >
                                                             <div class="form-group">
-                                                                <input type="submit" value="SUbmit " class="btn btn-primary">
+                                                                <input type="submit" value="submit " class="btn btn-primary">
                                                                 <div class="submitting"></div>
                                                             </div>
                                                         </div>
@@ -712,6 +734,66 @@ John Abraham</h5>
                     color: #cac953;
                     text-decoration: underline;">Predicting {{company}} Data For Next {{days}} Days</h1>
                 </div>
+                <div class="ecommerce-widget">
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">Max Price In Prediction</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{ max_price }}</h1>
+                                    </div>
+                                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
+                                    </div> -->
+                                </div>
+                                <div id="sparkline-revenue"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">Min Price In Prediction</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{ min_price}}</h1>
+                                    </div>
+                                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
+                                    </div> -->
+                                </div>
+                                <div id="sparkline-revenue2"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">Buy Stock or Not</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{ buy}}</h1>
+                                    </div>
+                                    <!-- <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                        <span>N/A</span>
+                                    </div> -->
+                                </div>
+                                <div id="sparkline-revenue3"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-muted">Change In Price In Given Period</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1">{{change_in_price}}</h1>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
+                                        <span>{{change_in_precentage}}%</span>
+                                    </div>
+                                </div>
+                                <div id="sparkline-revenue4"></div>
+                            </div>
+                        </div>
+                    </div>
                 <div class="row">
                     <!-- ============================================================== -->
                     <!--  area chart  -->
@@ -985,6 +1067,13 @@ John Abraham</h5>
     <script src="{% static 'assets/libs/js/main-js.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <script>
+    $(document).ready(function(){
+        $("#contactForm").on("submit", function(){
+          $("#pageloader").fadeIn();
+        });//submit
+      });
+
+
     Chart.defaults.global.defaultFontColor= '#fff';
     const labels_predict = {{ predicted_x| safe }};
     const data_predict = {

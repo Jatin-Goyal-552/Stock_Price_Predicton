@@ -272,7 +272,7 @@ def download(request,id):
 
 def predict(request):
     stocks="BTC-INR"
-    start_date='2020-04-01'
+    start_date='2000-04-01'
     close_date='2022-08-13'
     context={"flag":False}
     if request.method == 'POST':
@@ -325,7 +325,7 @@ def predict(request):
         stop = EarlyStopping(
         monitor='val_loss', 
         mode='min',
-        patience=10
+        patience=7
         )
 
         checkpoint= ModelCheckpoint(
@@ -358,12 +358,15 @@ def predict(request):
         predicted=[]
         for i in range(days):
             if predicted!=[]:
-                test_value=df_test[-interval+i:].values
-                test_value=np.append(test_value,predicted)
+                if (-interval+i)<0:
+                    test_value=df_test[-interval+i:].values
+                    test_value=np.append(test_value,predicted)
+                else:
+                    test_value=np.array(predicted)
             else:
                 test_value=df_test[-interval+i:].values
             print("test_value",test_value)
-            test_value=test_value.reshape(-1,1)
+            test_value=test_value[-interval:].reshape(-1,1)
             test_value=min_max_scalar.transform(test_value)
             test=[]
             test.append(test_value)
@@ -377,6 +380,10 @@ def predict(request):
         predicted_x=[]
         for i in range(1,days+1):
             predicted_x.append( str((date.today() + timedelta(days=i)).strftime('%d-%m-%y')))
+        if max(predicted)>y_high[-1]:
+            buy="Yes"
+        else:
+            buy="No"
         context={
                 'x':x,
                 'y_high':y_high,
@@ -385,7 +392,12 @@ def predict(request):
                 'predicted_y':predicted,
                 "flag":True,
                 "days":days,
-                "csv":zip(predicted_x,predicted)
+                "csv":zip(predicted_x,predicted),
+                "max_price":round(max(predicted),2),
+                "min_price":round(min(predicted),2),
+                "buy":buy,
+                "change_in_precentage":round(((max(predicted)-min(predicted))/(min(predicted)))*100,2),
+                "change_in_price":round((max(predicted)-min(predicted)),2)
             }
     
     return render(request,'predict.html',context)

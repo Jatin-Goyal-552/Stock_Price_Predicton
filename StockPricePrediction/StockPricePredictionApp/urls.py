@@ -6,4 +6,6 @@ urlpatterns=[
     path('compare/',views.compare,name='compare'),
     path('download/<id>',views.download,name='download'),
     path('predict/',views.predict,name='predict'),
+    path('all_stocks/',views.all_stocks,name='all_stocks'),
+    path('details/<id>',views.details,name='details'),
 ]

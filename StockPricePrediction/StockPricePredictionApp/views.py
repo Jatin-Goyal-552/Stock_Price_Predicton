@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render,HttpResponse
 import yfinance as yf
 import math
@@ -16,6 +17,8 @@ from keras.callbacks import EarlyStopping,ModelCheckpoint
 from keras import optimizers
 import pandas as pd
 from datetime import timedelta, date
+from django.core.paginator import Paginator
+
 
 df=None
 df1=None
@@ -353,7 +356,7 @@ def predict(request):
         # model.load("/")
         model.fit(x_train, y_train, batch_size=128, epochs=50,shuffle=True, validation_split=0.05, callbacks = [checkpoint,stop])
         model.load_weights("./")
-        df_test=bitcoin.history(start='2000-01-01', end='2022-05-13', actions=False)
+        df_test=bitcoin.history(start='2000-01-01', end='2032-05-13', actions=False)
         df_test=df_test.drop(['Open','High','Volume','Low'],axis=1)
         predicted=[]
         for i in range(days):
@@ -380,7 +383,7 @@ def predict(request):
         predicted_x=[]
         for i in range(1,days+1):
             predicted_x.append( str((date.today() + timedelta(days=i)).strftime('%d-%m-%y')))
-        if max(predicted)>y_high[-1]:
+        if predicted[0]<predicted[-1] and y_high[-1]<predicted[-1]:
             buy="Yes"
         else:
             buy="No"
@@ -401,3 +404,106 @@ def predict(request):
             }
     
     return render(request,'predict.html',context)
+
+def all_stocks(request):
+    all_data = pd.read_csv("C://Users//LENOVO//projects//Stock Price Prediction//StockPricePrediction//all_stocks.csv") 
+    one_page=10
+    paginator = Paginator(all_data, one_page) # Show 25 contacts per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    print("Page number",page_number)
+    # if page_number ==1:
+    #     print("hello")
+    if page_number==1 or page_number==None:
+        all_data = all_data[0:one_page]
+    else:
+        all_data = all_data[one_page*int(int(page_number)-1):one_page+one_page*int(int(page_number)-1)]
+    print(all_data['Symbol'])
+    dic={'symbol':[],'name':[],"high":[],'low':[],'open':[],'close':[],'volume':[],'country':[],'net change':[],'% Change':[],'industory':[]}
+    for symbol in all_data['Symbol']:
+        try:
+            bitcoin = yf.Ticker(symbol)
+            df=bitcoin.history(start='2000-01-01', end='2022-05-13', actions=False)
+            print("data",df.head())
+            # if df==None:
+            #     continue
+            dic['% Change'].append(round((df['Open'][-1]-df['Open'][-2])*100/df['Open'][-2],2))
+            dic['net change'].append(round((df['Open'][-1]-df['Open'][-2]),2))
+            dic['high'].append(round(df['High'][-1],2))
+            dic['symbol'].append(symbol)
+            dic['name'].append(all_data[all_data['Symbol']==symbol]['Name'].values[0])
+            dic['low'].append(round(df['Low'][-1],2))
+            dic['open'].append(round(df['Open'][-1],2))
+            dic['close'].append(round(df['Close'][-1],2))
+            dic['volume'].append(round(df['Volume'][-1],2))
+            dic['country'].append(all_data[all_data['Symbol']==symbol]['Country'].values[0])
+            
+            
+            dic['industory'].append(all_data[all_data['Symbol']==symbol]['Industry'].values[0])
+        except Exception as e:
+            print(e)
+    print(dic)
+    df=pd.DataFrame.from_dict(dic)
+    print(df.head(5))
+    
+    context={
+        "df":df,
+        'page_obj': page_obj
+    }
+    return render(request,'all_stocks.html',context) 
+
+def details(request,id):
+    global df
+    stocks = str(id)
+    # start_date = str(request.POST.get('start_date'))
+    # close_date= str(request.POST.get('close_date'))
+    print("dwwwwwwwwwwwwwww")
+    print('company')
+    print("stocks",stocks)
+
+    bitcoin = yf.Ticker(stocks)
+    des=bitcoin.info
+    temp_des={}
+    for key in des:
+        if des[key]!='None' and des[key]!=[]:
+            temp_des[key]=des[key]
+    des=temp_des
+    print("description",des)
+    df=bitcoin.history(start='2000-01-01', end='2032-05-13',  actions=False)
+    print("df",df.head())
+    print("***********************")
+    print(bitcoin.institutional_holders)
+    print("major stakeholder",bitcoin.recommendations)
+    df['Date']=df.index.strftime('%d-%m-%Y')
+        # try:
+    x=list(map(str,df.index.strftime('%d-%m-%y')))
+        # except:
+        #     x=list(map(str,df.index))
+    y_high=list(df['High'])
+    y_open=list(df['Open'])
+    y_low=list(df['Low'])
+    y_close=list(df['Close'])
+    y_volume=list(df['Volume'])    
+    context={
+            'x':x,
+            'y_high':y_high,
+            'y_low':y_low,
+            'y_open':y_open,
+            'y_close':y_close,
+            'y_volume':y_volume,
+            'company':stocks,
+            'df':df,
+            'predicted_x':[1,2,3,4,5],
+            'predicted_y':[5,4,3,2,1],
+            'max_price':round(max(y_high),2),
+            'min_price':round(min(y_low),2),
+            'last_day_price':round(y_close[-1],2),
+            'change_in_price':round(y_high[-1]-y_high[0],2),
+            'change_in_precentage':round(((y_high[-1]-y_high[0])/y_high[0])*100,2),
+            "description":des,
+            "flag":True,
+            'company':stocks,
+        }
+    
+    return render(request,'details.html',context)

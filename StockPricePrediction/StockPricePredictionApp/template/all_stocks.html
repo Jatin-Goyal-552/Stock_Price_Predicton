@@ -124,6 +124,57 @@
         text-transform: uppercase;
         font-weight: 600;
     }
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #00B4CC;
+  border-right: none;
+  padding: 5px;
+  height: 51px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  font-size: 20px;
+    color: #23239a;
+    font-weight: 500;
+
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+    width: 51px;
+    height: 50px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+    width: 30%;
+    margin-left: 47%;
+    margin-top: 8%;
+    margin-bottom: 3%;
+    transform: translate(-50%, -50%);
+}
 </style>
 
 <body>
@@ -266,7 +317,7 @@ John Abraham</h5>
                                 Menu
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="{% url 'home' %}"><i
+                                <a class="nav-link " href="{% url 'home' %}"><i
                                         class="fa fa-fw fa-user-circle"></i>Home <span
                                         class="badge badge-success">6</span></a>
                                 <!-- <div id="submenu-1" class="collapse submenu" style="">
@@ -316,7 +367,11 @@ John Abraham</h5>
                                 </div> -->
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'compare' %}"><i class="fa fa-fw fa-rocket"></i>Compare
+                                <a class="nav-link active" href="{% url 'all_stocks' %}" ><i class="fa fa-fw fa-rocket"></i>All Stocks</a>
+                                
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="{% url 'compare' %}"><i class="fa fa-fw fa-rocket"></i>Compare
                                     Two Stocks</a>
                                 <!-- <div id="submenu-2" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
@@ -344,6 +399,7 @@ John Abraham</h5>
                                     </ul>
                                 </div> -->
                             </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'predict' %}"><i
                                         class="fas fa-fw fa-chart-pie"></i>Predict Stock Prices</a>
@@ -370,7 +426,7 @@ John Abraham</h5>
                                     </ul>
                                 </div> -->
                             </li>
-                            <li class="nav-item ">
+                            <!-- <li class="nav-item ">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
                                     data-target="#submenu-4" aria-controls="submenu-4"><i
                                         class="fab fa-fw fa-wpforms"></i>Forms</a>
@@ -553,7 +609,7 @@ John Abraham</h5>
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </nav>
@@ -565,6 +621,23 @@ John Abraham</h5>
                 <!-- <button type="button" style="font-size: 20px;
             color: #ccf212;
             background: #0e1f28;"> <a href="{% url 'download' 0 %}">Export To CSV</a> </button> -->
+            <div class="wrap">
+                <form method="POST" >
+                    {% csrf_token %}
+                <div class="search">
+                    
+                   <input type="text" name="search" class="searchTerm" placeholder="Enter code of any company...">
+                   <button type="submit" class="searchButton">
+                     <i class="fa fa-search"></i>
+                  </button>
+                  
+                </div>
+            </form>
+             </div>
+             <button type="button" style="font-size: 20px;
+            color: #ccf212;
+            background: #0e1f28;
+        "> <a href="{% url 'download' 4 %}">Export To CSV</a> </button>
                 <div class="row" style="color:white">
                     <!-- ============================================================== -->
                     <!-- basic table  -->
@@ -584,10 +657,11 @@ John Abraham</h5>
                                                 <th>Open</th>
                                                 <th>Close</th>
                                                 <th>Volume</th>
-                                                <th>Country</th>
+                                                
                                                 <th style="font-size: 21px">Net Change</th>
                                                 <th style="font-size: 21px">% Change</th>
                                                 <th>Industory</th>
+                                                <th>Country</th>
                                             </tr>
                                         </thead>
                                         <tbody style="
@@ -608,26 +682,31 @@ John Abraham</h5>
                                                 <td>{{low}}</td>
                                                 <td>{{close}}</td>
                                                 <td>{{volume}}</td>
-                                                <td>{{country}}</td>
+                                                
                                                 {% if net < 0 %}
-                                                <td><span style="color: red;
+                                                <td><span style="color: #ea1010;
                                                     font-size: 21px;
-                                                    font-weight: 600;">{{net}}</span><i class="fa fa-fw fa-arrow-down" style="color: red;"></i></td>
+                                                    font-weight: 600;">{{net}}</span><i class="fa fa-fw fa-arrow-down" style="color: red;margin-left: 10px
+                                                    ;"></i></td>
                                                 {% else %}
                                                 <td><span style="color: rgb(21, 255, 0);
                                                     font-size: 21px;
-                                                    font-weight: 600;">{{net}}</span><i class="fa fa-fw fa-arrow-up" style="color: rgb(0, 255, 42);"></i></td>
+                                                    font-weight: 600;">{{net}}</span><i class="fa fa-fw fa-arrow-up" style="color: rgb(0, 255, 42);margin-left: 10px
+                                                    ;"></i></td>
                                                 {% endif %}
                                                 {% if precentage < 0 %}
-                                                <td><span style="color: rgb(255, 13, 13);
+                                                <td><span style="color: #ea1010;
                                                     font-size: 21px;
-                                                    font-weight: 600;">{{precentage}}</span><i class="fa fa-fw fa-arrow-down" style="color: rgb(255, 0, 0);"></i></td>
+                                                    font-weight: 600;">{{precentage}}</span><i class="fa fa-fw fa-arrow-down" style="color: rgb(255, 0, 0);margin-left: 10px
+                                                    ;"></i></td>
                                                 {% else %}
-                                                <td><span style="color: rgb(32, 216, 87);
+                                                <td><span style="color: rgb(21, 255, 0);
                                                     font-size: 21px;
-                                                    font-weight: 600;">{{precentage}}</span><i class="fa fa-fw fa-arrow-up" style="color: rgb(9, 230, 28);"></i></td>
+                                                    font-weight: 600;">{{precentage}}</span><i class="fa fa-fw fa-arrow-up" style="color: rgb(0, 255, 42);margin-left: 10px
+                                                    ;"></i></td>
                                                     {% endif %}
                                                 <td>{{industory}}</td>
+                                                <td>{{country}}</td>
                                             </tr>
                                             {% endfor %}
                                     </table>
@@ -637,6 +716,7 @@ John Abraham</h5>
                 </div>
                
                 </div>
+                {% if flag %}
                 <div class="pagination" style="margin-left: 28%;
                 margin-top: 3%;
                 font-size: 22px;
@@ -645,11 +725,16 @@ John Abraham</h5>
                         {% if page_obj.has_previous %}
                             <a href="?page=1">&laquo; first</a>
                             <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                        {% endif %}
-                
-                        <span class="current">
+                            <span class="current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+                        {% else %}
+                        <span class="current" >
                             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
                         </span>
+                        {% endif %}
+                
+                        
                 
                         {% if page_obj.has_next %}
                             <a href="?page={{ page_obj.next_page_number }}">next</a>
@@ -657,7 +742,7 @@ John Abraham</h5>
                         {% endif %}
                     </span>
                 </div>
-                <div class="footer" style="margin-top:9%">
+                <div class="footer" style="margin-top:8%">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
@@ -674,6 +759,26 @@ John Abraham</h5>
                         </div>
                     </div>
                 </div>
+                {% else %}
+                <div class="footer" style="margin-top:35%">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                Copyright © 2018 Concept. All rights reserved. Dashboard by <a
+                                    href="https://colorlib.com/wp/">Colorlib</a>.
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="text-md-right footer-links d-none d-sm-block">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+               
                 <!-- ============================================================== -->
                 <!-- end footer -->
                 <!-- ============================================================== -->

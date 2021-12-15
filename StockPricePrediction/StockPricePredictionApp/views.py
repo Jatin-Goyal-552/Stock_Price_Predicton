@@ -9,7 +9,7 @@ import tensorflow as tf
 import keras
 from keras.preprocessing import image
 from keras.models import Sequential
-from keras.layers import Conv2D, MaxPool2D, Flatten,Dense,Dropout,BatchNormalization,LSTM
+from keras.layers import Conv2D, MaxPool2D, Flatten,Dense,Dropout,BatchNormalization,LSTM,Bidirectional
 from keras import regularizers
 from tensorflow.keras.optimizers import Adam,RMSprop,SGD,Adamax
 import csv
@@ -33,16 +33,17 @@ def home(request):
         stocks = str(request.POST.get('company1'))
         start_date = str(request.POST.get('start_date'))
         close_date= str(request.POST.get('close_date'))
-        print("dwwwwwwwwwwwwwww")
-        print(start_date,close_date)
-        print('company')
+        # print("dwwwwwwwwwwwwwww")
+        # print(start_date,close_date)
+        # print('company')
+
         # if company=='0':
         #     stocks='BTC-USD'
         # elif company=="1":
         #     stocks='AAPL'
         # elif company=="2":
         #     stocks="GOOG"
-        print("stocks",stocks)
+        # print("stocks",stocks)
 
         bitcoin = yf.Ticker(stocks)
         des=bitcoin.info
@@ -51,15 +52,15 @@ def home(request):
             if des[key]!='None' and des[key]!=[]:
                 temp_des[key]=des[key]
         des=temp_des
-        print("description",des)
+        # print("description",des)
         # print(des)
         # print("description",type(des))
         # print("news",bitcoin.news)
         df=bitcoin.history(start=str(start_date), end=str(close_date), actions=False)
-        print("df",df.head())
-        print("***********************")
-        print(bitcoin.institutional_holders)
-        print("major stakeholder",bitcoin.recommendations)
+        # print("df",df.head())
+        # print("***********************")
+        # print(bitcoin.institutional_holders)
+        # print("major stakeholder",bitcoin.recommendations)
         df['Date']=df.index.strftime('%d-%m-%Y')
         # try:
         x=list(map(str,df.index.strftime('%d-%m-%y')))
@@ -157,8 +158,8 @@ def compare(request):
         stocks2 = request.POST.get('company2')
         start_date = str(request.POST.get('start_date'))
         close_date= str(request.POST.get('close_date'))
-        print(start_date,close_date)
-        print('company')
+        # print(start_date,close_date)
+        # print('company')
         # if company1=='0':
         #     stocks1='BTC-INR'
         # elif company1=="1":
@@ -175,7 +176,7 @@ def compare(request):
         data1 = yf.Ticker(stocks1)
         df1=data1.history(start=str(start_date), end=str(close_date), actions=False)
         df1['Date']=df1.index.strftime('%d-%m-%y')
-        print(df1)
+        # print(df1)
         # try:
         x_stock1=list(map(str,df1.index.strftime('%d-%m-%y')))
         # except:
@@ -188,7 +189,7 @@ def compare(request):
         data2 = yf.Ticker(stocks2)
         df2=data2.history(start=str(start_date), end=str(close_date), actions=False)
         df2['Date']=df2.index.strftime('%d-%m-%y')
-        print(df2)
+        # print(df2)
         # try:
         x_stock2=list(map(str,df2.index.strftime('%d-%m-%y')))
         # except:
@@ -248,7 +249,7 @@ def compare(request):
 
 def download(request,id):
     global df,df1,df2
-    print(df)
+    # print(df)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="data.csv"' # your filename
     # df.to_csv("data.csv")
@@ -259,21 +260,37 @@ def download(request,id):
 
     # for user in users:
     #     writer.writerow(user)
-    writer = csv.writer(response)
-    writer.writerow(['Date', 'Open', 'High', 'Low', 'Close', 'Volume'])
+    
     if id=='0':
+        writer = csv.writer(response)
+        writer.writerow(['Date', 'Open', 'High', 'Low', 'Close', 'Volume'])
         for ind in df.index:
             writer.writerow([ind,df['Open'][ind],df['High'][ind],df['Low'][ind],df['Close'][ind],df['Volume'][ind]])
     elif id=='1':
+        writer = csv.writer(response)
+        writer.writerow(['Date', 'Open', 'High', 'Low', 'Close', 'Volume'])
         for ind in df1.index:
             writer.writerow([ind,df1['Open'][ind],df1['High'][ind],df1['Low'][ind],df1['Close'][ind],df1['Volume'][ind]])
     elif id=='2':
+        writer = csv.writer(response)
+        writer.writerow(['Date', 'Open', 'High', 'Low', 'Close', 'Volume'])
         for ind in df2.index:
             writer.writerow([ind,df2['Open'][ind],df2['High'][ind],df2['Low'][ind],df2['Close'][ind],df2['Volume'][ind]])
+    elif id=='3':
+        writer = csv.writer(response)
+        writer.writerow(['', 'Date','Prediction'])
+        for ind in df.index:
+            writer.writerow([ind,df['Date'][ind],df['Prediction'][ind]])
+    elif id=='4':
+        writer = csv.writer(response)
+        writer.writerow(['', 'Symbol','Name','High','Low','Open','Close','Net Change','% Change','Industory','Country'])
+        for ind in df.index:
+            writer.writerow([ind,df['symbol'][ind],df['name'][ind],df['high'][ind],df['low'][ind],df['open'][ind],df['close'][ind],df['net change'][ind],df['% Change'][ind],df['industory'][ind],df['country'][ind]])
     return response
 
 
 def predict(request):
+    global df
     stocks="BTC-INR"
     start_date='2000-04-01'
     close_date='2022-08-13'
@@ -296,8 +313,8 @@ def predict(request):
 
         bitcoin = yf.Ticker(stocks)
         df=bitcoin.history(start=str(start_date), end=str(close_date), actions=False)
-        print(df)
-        print("***********************")
+        # print(df)
+        # print("***********************")
         # print(bitcoin.institutional_holders)
         # df['Date']=df.index.strftime('%d-%m-%y')
         x=list(map(str,df.index.strftime('%d-%m-%y')))
@@ -311,7 +328,7 @@ def predict(request):
         min_max_scalar=MinMaxScaler(feature_range=(0,1))
         data=df.values
         scaled_data=min_max_scalar.fit_transform(data)
-        print("len of scaled data",len(scaled_data))
+        # print("len of scaled data",len(scaled_data))
         train_data=scaled_data[:,:]
         x_train=[]
         y_train=[]
@@ -319,16 +336,16 @@ def predict(request):
         for i in range(interval,len(train_data)):
             x_train.append(train_data[i-interval:i,0])
             y_train.append(train_data[i,0])
-        print("len x train",len(x_train),"len y train",len(y_train))
+        # print("len x train",len(x_train),"len y train",len(y_train))
         x_train,y_train=np.array(x_train),np.array(y_train)
         x_train=np.reshape(x_train,(x_train.shape[0],x_train.shape[1],1))
-        print("x_train.shape",x_train.shape)
+        # print("x_train.shape",x_train.shape)
         # model = prophet.Prophet(yearly_seasonality=True, weekly_seasonality=True, seasonality_mode="additive")
 
         stop = EarlyStopping(
         monitor='val_loss', 
         mode='min',
-        patience=7
+        patience=5
         )
 
         checkpoint= ModelCheckpoint(
@@ -339,8 +356,8 @@ def predict(request):
             save_best_only=True)
 
         model=Sequential()
-        model.add(LSTM(200,return_sequences=True,input_shape=(x_train.shape[1],1)))
-        model.add(LSTM(units=100))
+        model.add(Bidirectional( LSTM(140,return_sequences=True,input_shape=(x_train.shape[1],1))))
+        model.add(Bidirectional(LSTM(units=80)))
         model.add(Dense(100))
         model.add(Dense(1))
 
@@ -354,7 +371,7 @@ def predict(request):
         #     mode='min',
         #     save_best_only=True)
         # model.load("/")
-        model.fit(x_train, y_train, batch_size=128, epochs=50,shuffle=True, validation_split=0.05, callbacks = [checkpoint,stop])
+        model.fit(x_train, y_train, batch_size=512, epochs=50,shuffle=True, validation_split=0.05, callbacks = [checkpoint,stop])
         model.load_weights("./")
         df_test=bitcoin.history(start='2000-01-01', end='2032-05-13', actions=False)
         df_test=df_test.drop(['Open','High','Volume','Low'],axis=1)
@@ -368,7 +385,7 @@ def predict(request):
                     test_value=np.array(predicted)
             else:
                 test_value=df_test[-interval+i:].values
-            print("test_value",test_value)
+            # print("test_value",test_value)
             test_value=test_value[-interval:].reshape(-1,1)
             test_value=min_max_scalar.transform(test_value)
             test=[]
@@ -378,7 +395,7 @@ def predict(request):
             # print("test",test)
             tomorrow_prediction=model.predict(test)
             tomorrow_prediction=min_max_scalar.inverse_transform(tomorrow_prediction)
-            print("tomorrow_prediction",tomorrow_prediction)
+            # print("tomorrow_prediction",tomorrow_prediction)
             predicted.append(tomorrow_prediction[0][0])
         predicted_x=[]
         for i in range(1,days+1):
@@ -387,6 +404,11 @@ def predict(request):
             buy="Yes"
         else:
             buy="No"
+
+        dic={}
+        dic['Date']=predicted_x
+        dic['Prediction']=predicted
+        df=pd.DataFrame.from_dict(dic)
         context={
                 'x':x,
                 'y_high':y_high,
@@ -406,26 +428,70 @@ def predict(request):
     return render(request,'predict.html',context)
 
 def all_stocks(request):
+    global df
+    today = date.today()
+
+# dd/mm/YY
+    d1 = today.strftime("%Y-%m-%d")
+    print(d1)
+    print(date.today() - timedelta(days=3))
+    if request.method == 'POST':
+        search=request.POST.get('search')
+        # print(search,"4345")
+        all_data = pd.read_csv("C://Users//LENOVO//projects//Stock Price Prediction//StockPricePrediction//all_stocks.csv") 
+        # print(all_data['Symbol'])
+        dic={'symbol':[],'name':[],"high":[],'low':[],'open':[],'close':[],'volume':[],'country':[],'net change':[],'% Change':[],'industory':[]}
+        for symbol in [search]:
+            try:
+                bitcoin = yf.Ticker(symbol)
+                df=bitcoin.history(start=str((date.today() - timedelta(days=3)).strftime("%Y-%m-%d")) ,end=str(d1), actions=False)
+                # print("data",df.head())
+                # if df==None:
+                #     continue
+                dic['% Change'].append(round((df['Open'][-1]-df['Open'][-2])*100/df['Open'][-2],2))
+                dic['net change'].append(round((df['Open'][-1]-df['Open'][-2]),2))
+                dic['high'].append(round(df['High'][-1],2))
+                dic['symbol'].append(symbol)
+                dic['name'].append(all_data[all_data['Symbol']==symbol]['Name'].values[0])
+                dic['low'].append(round(df['Low'][-1],2))
+                dic['open'].append(round(df['Open'][-1],2))
+                dic['close'].append(round(df['Close'][-1],2))
+                dic['volume'].append(round(df['Volume'][-1],2))
+                dic['country'].append(all_data[all_data['Symbol']==symbol]['Country'].values[0])
+                
+                
+                dic['industory'].append(all_data[all_data['Symbol']==symbol]['Industry'].values[0])
+            except Exception as e:
+                print(e)
+        # print(dic)
+        df=pd.DataFrame.from_dict(dic)
+        # print(df.head(5))
+            
+        context={
+                "df":df,
+                "flag":False
+            }
+        return render(request,'all_stocks.html',context) 
     all_data = pd.read_csv("C://Users//LENOVO//projects//Stock Price Prediction//StockPricePrediction//all_stocks.csv") 
     one_page=10
     paginator = Paginator(all_data, one_page) # Show 25 contacts per page.
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    print("Page number",page_number)
+    # print("Page number",page_number)
     # if page_number ==1:
     #     print("hello")
     if page_number==1 or page_number==None:
         all_data = all_data[0:one_page]
     else:
         all_data = all_data[one_page*int(int(page_number)-1):one_page+one_page*int(int(page_number)-1)]
-    print(all_data['Symbol'])
+    # print(all_data['Symbol'])
     dic={'symbol':[],'name':[],"high":[],'low':[],'open':[],'close':[],'volume':[],'country':[],'net change':[],'% Change':[],'industory':[]}
     for symbol in all_data['Symbol']:
         try:
             bitcoin = yf.Ticker(symbol)
-            df=bitcoin.history(start='2000-01-01', end='2022-05-13', actions=False)
-            print("data",df.head())
+            df=bitcoin.history(start=str((date.today() - timedelta(days=3)).strftime("%Y-%m-%d")) ,end=str(d1), actions=False)
+            # print("data",df.head())
             # if df==None:
             #     continue
             dic['% Change'].append(round((df['Open'][-1]-df['Open'][-2])*100/df['Open'][-2],2))
@@ -443,13 +509,14 @@ def all_stocks(request):
             dic['industory'].append(all_data[all_data['Symbol']==symbol]['Industry'].values[0])
         except Exception as e:
             print(e)
-    print(dic)
+    # print(dic)
     df=pd.DataFrame.from_dict(dic)
-    print(df.head(5))
+    # print(df.head(5))
     
     context={
         "df":df,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        "flag":True
     }
     return render(request,'all_stocks.html',context) 
 
@@ -458,9 +525,9 @@ def details(request,id):
     stocks = str(id)
     # start_date = str(request.POST.get('start_date'))
     # close_date= str(request.POST.get('close_date'))
-    print("dwwwwwwwwwwwwwww")
-    print('company')
-    print("stocks",stocks)
+    # print("dwwwwwwwwwwwwwww")
+    # print('company')
+    # print("stocks",stocks)
 
     bitcoin = yf.Ticker(stocks)
     des=bitcoin.info
@@ -469,12 +536,12 @@ def details(request,id):
         if des[key]!='None' and des[key]!=[]:
             temp_des[key]=des[key]
     des=temp_des
-    print("description",des)
+    # print("description",des)
     df=bitcoin.history(start='2000-01-01', end='2032-05-13',  actions=False)
-    print("df",df.head())
-    print("***********************")
-    print(bitcoin.institutional_holders)
-    print("major stakeholder",bitcoin.recommendations)
+    # print("df",df.head())
+    # print("***********************")
+    # print(bitcoin.institutional_holders)
+    # print("major stakeholder",bitcoin.recommendations)
     df['Date']=df.index.strftime('%d-%m-%Y')
         # try:
     x=list(map(str,df.index.strftime('%d-%m-%y')))

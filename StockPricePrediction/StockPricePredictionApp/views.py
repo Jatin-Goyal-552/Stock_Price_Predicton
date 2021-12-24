@@ -356,8 +356,8 @@ def predict(request):
             save_best_only=True)
 
         model=Sequential()
-        model.add(Bidirectional( LSTM(140,return_sequences=True,input_shape=(x_train.shape[1],1))))
-        model.add(Bidirectional(LSTM(units=80)))
+        model.add(LSTM(200,return_sequences=True,input_shape=(x_train.shape[1],1)))
+        model.add(LSTM(units=100))
         model.add(Dense(100))
         model.add(Dense(1))
 
@@ -371,7 +371,7 @@ def predict(request):
         #     mode='min',
         #     save_best_only=True)
         # model.load("/")
-        model.fit(x_train, y_train, batch_size=512, epochs=50,shuffle=True, validation_split=0.05, callbacks = [checkpoint,stop])
+        model.fit(x_train, y_train, batch_size=512, epochs=10,shuffle=True, validation_split=0.05, callbacks = [checkpoint,stop])
         model.load_weights("./")
         df_test=bitcoin.history(start='2000-01-01', end='2032-05-13', actions=False)
         df_test=df_test.drop(['Open','High','Volume','Low'],axis=1)
